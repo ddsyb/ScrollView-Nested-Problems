@@ -1,5 +1,5 @@
 # ScrollView-Nested-Problems
-解决Android中出现ScrollView嵌套 GridView 、WebView 、RecyclerView出现的高度问题。
+解决Android中出现ScrollView嵌套 GridView 、WebView 、ListView、RecyclerView出现的高度问题。
 
 开篇语：最近开始想写一些技术总结了，一方面分享给其他同学，另一方面也作为自己的技术积累。
 今天我分享的是日常遇到的问题，ScrollView组件里面嵌套GridView、WebView、ListView等本身具有滑动的组件时，所引发的高度显示不全的问题。
@@ -58,5 +58,70 @@ public static int getSize(int measureSpec) {
 
             return (measureSpec & ~MODE_MASK);
         }
+
+---------------------------------------------------------------------------------------------
+对于RecyclerView来说,重写onMeasure()方法就不管用了。
+1.一种解决办法是在RecyclerView的外部套上一层RelativeLayout
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/menuRv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:layout_marginRight="@dimen/margin_16"/>
+
+</RelativeLayout>
+android:descendantFocusability属性的值有三种： 
+beforeDescendants：viewgroup会优先其子类控件而获取到焦点 
+blocksDescendants：viewgroup会覆盖子类控件而直接获得焦点 
+afterDescendants：viewgroup只有当其子类控件不需要获取焦点时才获取焦点
+但是这个方案recyclerView时有卡顿的问题
+原因还是滑动冲突的问题，可以重写LinearLayoutManager，设置让其不可滑动，外部滑动靠ScrollView,这样就解决了滑动时卡顿的问题 
+代码如下：
+    public class ScrollLinearLayoutManager extends LinearLayoutManager {
+        private boolean isScrollEnabled = true;
+
+        public ScrollLinearLayoutManager(Context context) {
+            super(context);
+        }
+
+        public ScrollLinearLayoutManager(Context context, int orientation, boolean reverseLayout) {
+            super(context, orientation, reverseLayout);
+        }
+
+        public ScrollLinearLayoutManager(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+            super(context, attrs, defStyleAttr, defStyleRes);
+        }
+
+        public void setScrollEnabled(boolean flag) {
+            this.isScrollEnabled = flag;
+        }
+
+        @Override
+        public boolean canScrollVertically() {
+            return isScrollEnabled && super.canScrollVertically();
+        }
+    }
+
+简单使用：
+    ScrollLinearLayoutManager scrollLinearLayoutManager = new ScrollLinearLayoutManager(this);
+    scrollLinearLayoutManager.setScrollEnabled(false);
+    mRecyclerView.setLayoutManager(scrollLinearLayoutManager);
+
+2.完美方案是这样的：首先在xml布局中将你的ScrollView替换成android.support.v4.widget.NestedScrollView，并在java代码中设置recyclerView.setNestedScrollingEnabled(false);
+
+
+
+
+
+
+
+
+
+
 
 
