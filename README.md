@@ -81,12 +81,18 @@ public static int getSize(int measureSpec) {
             android:layout_marginRight="@dimen/margin_16"/>
 
 </RelativeLayout>
+
 android:descendantFocusability属性的值有三种： 
+
 beforeDescendants：viewgroup会优先其子类控件而获取到焦点 
+
 blocksDescendants：viewgroup会覆盖子类控件而直接获得焦点 
+
 afterDescendants：viewgroup只有当其子类控件不需要获取焦点时才获取焦点
+
 但是这个方案recyclerView时有卡顿的问题
 原因还是滑动冲突的问题，可以重写LinearLayoutManager，设置让其不可滑动，外部滑动靠ScrollView,这样就解决了滑动时卡顿的问题 
+
 代码如下：
     public class ScrollLinearLayoutManager extends LinearLayoutManager {
         private boolean isScrollEnabled = true;
