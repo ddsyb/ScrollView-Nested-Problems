@@ -1,5 +1,6 @@
 # ScrollView-Nested-Problems
-解决Android中出现ScrollView嵌套 GridView 、WebView 、ListView、RecyclerView出现的高度问题。
+解决Android中出现ScrollView嵌套 ListView、RecyclerView、GridView 、WebView出现的高度问题。
+CSDN的博客地址：http://blog.csdn.net/u012982629/article/details/79464230
 
 开篇语：最近开始想写一些技术总结了，一方面分享给其他同学，另一方面也作为自己的技术积累。
 今天我分享的是日常遇到的问题，ScrollView组件里面嵌套GridView、WebView、ListView等本身具有滑动的组件时，所引发的高度显示不全的问题。
