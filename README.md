@@ -9,8 +9,10 @@
 
   @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    
         int mExpandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
         super.onMeasure(widthMeasureSpec, mExpandSpec);
+        
     }
     
     
@@ -25,26 +27,35 @@ MeasureSpec代表一个32位的int值，前俩位代表SpecMode，后30位代表
 
 二.如何创建MeasureSpec
 MeasureSpec内部提供了创建MeasureSpec的方法：
+
 public static int makeMeasureSpec(int size, int mode) {
+
             if (sUseBrokenMakeMeasureSpec) {
                 return size + mode;
             } else {
                 return (size & ~MODE_MASK) | (mode & MODE_MASK);
             }
+            
         }
 
 private static final int MODE_SHIFT = 30;
+
 private static final int MODE_MASK  = 0x3 << MODE_SHIFT; 二进制 1100....00 32位
-public static final int UNSPECIFIED = 0 << MODE_SHIFT;   二进制 0000....00 32位
-public static final int EXACTLY     = 1 << MODE_SHIFT;   二进制 0100....00 32位
+
+public static final int UNSPECIFIED = 0 << MODE_SHIFT;   二进制 0000....00 32位
+
+public static final int EXACTLY     = 1 << MODE_SHIFT;   二进制 0100....00 32位
+
 public static final int AT_MOST     = 2 << MODE_SHIFT;   二进制 1000....00 32位
   
 MeasureSpec代表一个32位的int值，前俩位代表SpecMode，后30位代表SpecSize.通过巧妙的位运算，即可通过MeasureSpec来得到SpecSize,SpecMode.
 public static int getMode(int measureSpec) {
+
             return (measureSpec & MODE_MASK);  
         }
   
 public static int getSize(int measureSpec) {
+
             return (measureSpec & ~MODE_MASK);
         }
 
