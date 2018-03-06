@@ -55,6 +55,7 @@ public static final int EXACTLY     = 1 << MODE_SHIFT;   二进制 0100....00
 public static final int AT_MOST     = 2 << MODE_SHIFT;   二进制 1000....00 32位
   
 MeasureSpec代表一个32位的int值，前俩位代表SpecMode，后30位代表SpecSize.通过巧妙的位运算，即可通过MeasureSpec来得到SpecSize,SpecMode.
+
 public static int getMode(int measureSpec) {
 
             return (measureSpec & MODE_MASK);  
@@ -71,16 +72,7 @@ public static int getSize(int measureSpec) {
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:descendantFocusability="blocksDescendants">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/menuRv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_16"
-            android:layout_marginRight="@dimen/margin_16"/>
-
-</RelativeLayout>
+    android:descendantFocusability="blocksDescendants"/>
 
 android:descendantFocusability属性的值有三种： 
 
