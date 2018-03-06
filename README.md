@@ -19,9 +19,12 @@
 上面方法的2个参数，来自于父视图发过来给子视图的限制条件,这涉及到一个知识点MeauseSpec这个类.
 一.MeasureSpec的构成
 MeasureSpec代表一个32位的int值，前俩位代表SpecMode，后30位代表SpecSize.其中：SpecMode代表测量的模式，SpecSize值在某种测量模式下的规格大小。
+
 共有三种测量模式： 
 1.EXACTLY: 父容器已经检测出子View所需要的精确大小，这个时候view的大小即为SpecSize的大小，他对应于布局参数中的MATCH_PARENT,或者精确大小值；
+
 2.AT_MOST: 父容器指定了一个大小，即SpecSize，子view的大小不能超过这个SpecSize的大小；
+
 3.UNSPECIFIED: 父容器对子View的大小没有任何要求,子View想多大都可以。
 
 
