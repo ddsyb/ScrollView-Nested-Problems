@@ -68,11 +68,14 @@ public static int getSize(int measureSpec) {
 
 ---------------------------------------------------------------------------------------------
 对于RecyclerView来说,重写onMeasure()方法就不管用了。
+
 1.一种解决办法是在RecyclerView的外部套上一层RelativeLayout
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:descendantFocusability="blocksDescendants"/>
+
+    <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:descendantFocusability="blocksDescendants">
+     </RelativeLayout>
 
 android:descendantFocusability属性的值有三种： 
 
